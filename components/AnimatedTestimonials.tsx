@@ -104,26 +104,20 @@ export const AnimatedTestimonials = ({
                   }}
                   className="absolute inset-0 origin-bottom"
                 >
-                  <div className="h-full w-full rounded-3xl overflow-hidden bg-zinc-900 shadow-2xl border border-white/10 relative">
+                  <div
+                    className="h-full w-full rounded-3xl overflow-hidden bg-zinc-900 shadow-2xl border border-white/10 relative"
+                    onMouseEnter={isActive(index) ? handleVideoInteraction : undefined}
+                    onTouchStart={isActive(index) ? handleVideoInteraction : undefined}
+                  >
                     {/* Render video iframe */}
                     <iframe
                       src={isActive(index) ? testimonial.src : ''}
                       title={testimonial.name}
-                      className="w-full h-full object-cover"
+                      className="w-full h-full object-cover relative z-10"
                       frameBorder="0"
                       allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                       allowFullScreen
                     ></iframe>
-
-                    {/* Overlay transparente para capturar cliques no vídeo ativo */}
-                    {isActive(index) && (
-                      <div
-                        className="absolute inset-0 z-10 cursor-pointer"
-                        onClick={handleVideoInteraction}
-                        onMouseEnter={handleVideoInteraction}
-                        style={{ pointerEvents: 'auto' }}
-                      ></div>
-                    )}
 
                     {/* Overlay para vídeos inativos */}
                     {!isActive(index) && (
