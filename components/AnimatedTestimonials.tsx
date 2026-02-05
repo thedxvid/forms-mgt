@@ -15,7 +15,6 @@ export const AnimatedTestimonials = ({
   className?: string;
 }) => {
   const [active, setActive] = useState(0);
-  const [isPlaying, setIsPlaying] = useState(false);
   const [isPaused, setIsPaused] = useState(false);
   const intervalRef = useRef<NodeJS.Timeout | null>(null);
 
@@ -31,8 +30,8 @@ export const AnimatedTestimonials = ({
     return index === active;
   };
 
-  const handleVideoClick = () => {
-    setIsPlaying(true);
+  const handleVideoInteraction = () => {
+    // Para o autoplay definitivamente quando o usuário interage com o vídeo
     setIsPaused(true);
     if (intervalRef.current) {
       clearInterval(intervalRef.current);
@@ -40,16 +39,29 @@ export const AnimatedTestimonials = ({
     }
   };
 
+  // Gerenciar autoplay
   useEffect(() => {
-    if (autoplay && !isPaused) {
-      intervalRef.current = setInterval(handleNext, 5000);
-      return () => {
-        if (intervalRef.current) {
-          clearInterval(intervalRef.current);
-        }
-      };
+    // Limpar intervalo anterior
+    if (intervalRef.current) {
+      clearInterval(intervalRef.current);
+      intervalRef.current = null;
     }
-  }, [autoplay, isPaused, active]);
+
+    // Só ativar autoplay se não estiver pausado
+    if (autoplay && !isPaused) {
+      intervalRef.current = setInterval(() => {
+        setActive((prev) => (prev + 1) % testimonials.length);
+      }, 5000);
+    }
+
+    // Cleanup
+    return () => {
+      if (intervalRef.current) {
+        clearInterval(intervalRef.current);
+        intervalRef.current = null;
+      }
+    };
+  }, [autoplay, isPaused, active, testimonials.length]);
 
   const randomRotateY = () => {
     return Math.floor(Math.random() * 21) - 10;
@@ -92,24 +104,33 @@ export const AnimatedTestimonials = ({
                   }}
                   className="absolute inset-0 origin-bottom"
                 >
-                  <div className="h-full w-full rounded-3xl overflow-hidden bg-zinc-900 shadow-2xl border border-white/10">
-                    {/* Render video iframe instead of image */}
+                  <div className="h-full w-full rounded-3xl overflow-hidden bg-zinc-900 shadow-2xl border border-white/10 relative">
+                    {/* Render video iframe */}
                     <iframe
                       src={isActive(index) ? testimonial.src : ''}
                       title={testimonial.name}
-                      className="w-full h-full object-cover pointer-events-auto"
+                      className="w-full h-full object-cover"
                       frameBorder="0"
                       allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                       allowFullScreen
-                      onClick={isActive(index) ? handleVideoClick : undefined}
                     ></iframe>
+
+                    {/* Overlay transparente para capturar cliques no vídeo ativo */}
+                    {isActive(index) && (
+                      <div
+                        className="absolute inset-0 z-10 cursor-pointer"
+                        onClick={handleVideoInteraction}
+                        onMouseEnter={handleVideoInteraction}
+                        style={{ pointerEvents: 'auto' }}
+                      ></div>
+                    )}
+
+                    {/* Overlay para vídeos inativos */}
                     {!isActive(index) && (
                       <div
-                        className="absolute inset-0 bg-black/40 backdrop-blur-[2px] cursor-pointer"
+                        className="absolute inset-0 bg-black/40 backdrop-blur-[2px] cursor-pointer z-20"
                         onClick={() => {
                           setActive(index);
-                          setIsPaused(false);
-                          setIsPlaying(false);
                         }}
                       ></div>
                     )}
@@ -120,7 +141,7 @@ export const AnimatedTestimonials = ({
           </div>
         </div>
         <div className="flex justify-between flex-col py-4">
-          {/* Navigation arrows moved to top */}
+          {/* Navigation arrows at top */}
           <div className="flex gap-4 mb-8">
             <button
               onClick={handlePrev}
