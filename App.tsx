@@ -111,7 +111,7 @@ const App: React.FC = () => {
         <div id="testimonials" className="py-32 border-t border-white/5 bg-gradient-to-b from-transparent to-black/20">
           <div className="max-w-7xl mx-auto px-6">
             <div className="text-center mb-12">
-              <h2 className="text-4xl md:text-5xl font-bold gradient-text mb-6">A Elite da Mentoria</h2>
+              <h2 className="text-4xl md:text-5xl font-bold gradient-text mb-6">Depoimento de Alunos</h2>
               <p className="text-gray-400 max-w-2xl mx-auto text-lg leading-relaxed">
                 Estes são os resultados de quem decidiu não aceitar o comum e buscou a excelência técnica e visual.
               </p>

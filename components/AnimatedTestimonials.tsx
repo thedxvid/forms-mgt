@@ -1,7 +1,5 @@
-
-import React, { useEffect, useState, useRef } from "react";
-import { IconArrowLeft, IconArrowRight } from "@tabler/icons-react";
-import { motion, AnimatePresence } from "framer-motion";
+import React, { useRef, useState } from "react";
+import { IconPlay, IconPause } from "@tabler/icons-react";
 import { cn } from "../lib/utils";
 import { Testimonial } from "../types";
 
@@ -14,197 +12,41 @@ export const AnimatedTestimonials = ({
   autoplay?: boolean;
   className?: string;
 }) => {
-  const [active, setActive] = useState(0);
-  const [isPaused, setIsPaused] = useState(false);
-  const intervalRef = useRef<NodeJS.Timeout | null>(null);
-
-  const handleNext = () => {
-    setActive((prev) => (prev + 1) % testimonials.length);
-  };
-
-  const handlePrev = () => {
-    setActive((prev) => (prev - 1 + testimonials.length) % testimonials.length);
-  };
-
-  const isActive = (index: number) => {
-    return index === active;
-  };
-
-  const handleVideoInteraction = () => {
-    // Para o autoplay definitivamente quando o usuário interage com o vídeo
-    setIsPaused(true);
-    if (intervalRef.current) {
-      clearInterval(intervalRef.current);
-      intervalRef.current = null;
-    }
-  };
-
-  // Gerenciar autoplay
-  useEffect(() => {
-    // Limpar intervalo anterior
-    if (intervalRef.current) {
-      clearInterval(intervalRef.current);
-      intervalRef.current = null;
-    }
-
-    // Só ativar autoplay se não estiver pausado
-    if (autoplay && !isPaused) {
-      intervalRef.current = setInterval(() => {
-        setActive((prev) => (prev + 1) % testimonials.length);
-      }, 5000);
-    }
-
-    // Cleanup
-    return () => {
-      if (intervalRef.current) {
-        clearInterval(intervalRef.current);
-        intervalRef.current = null;
-      }
-    };
-  }, [autoplay, isPaused, active, testimonials.length]);
-
-  const randomRotateY = () => {
-    return Math.floor(Math.random() * 21) - 10;
-  };
-
   return (
-    <div className={cn("max-w-sm md:max-w-4xl mx-auto px-4 md:px-8 lg:px-12 py-20", className)}>
-      <div className="relative grid grid-cols-1 md:grid-cols-2 gap-12 md:gap-20">
-        <div>
-          <div className="relative h-80 w-full">
-            <AnimatePresence>
-              {testimonials.map((testimonial, index) => (
-                <motion.div
-                  key={testimonial.src}
-                  initial={{
-                    opacity: 0,
-                    scale: 0.9,
-                    z: -100,
-                    rotate: randomRotateY(),
-                  }}
-                  animate={{
-                    opacity: isActive(index) ? 1 : 0.7,
-                    scale: isActive(index) ? 1 : 0.95,
-                    z: isActive(index) ? 0 : -100,
-                    rotate: isActive(index) ? 0 : randomRotateY(),
-                    zIndex: isActive(index)
-                      ? 99
-                      : testimonials.length + 2 - index,
-                    y: isActive(index) ? [0, -80, 0] : 0,
-                  }}
-                  exit={{
-                    opacity: 0,
-                    scale: 0.9,
-                    z: 100,
-                    rotate: randomRotateY(),
-                  }}
-                  transition={{
-                    duration: 0.4,
-                    ease: "easeInOut",
-                  }}
-                  className="absolute inset-0 origin-bottom"
-                >
-                  <div
-                    className="h-full w-full rounded-3xl overflow-hidden bg-zinc-900 shadow-2xl border border-white/10 relative"
-                    onMouseEnter={isActive(index) ? handleVideoInteraction : undefined}
-                    onTouchStart={isActive(index) ? handleVideoInteraction : undefined}
-                  >
-                    {/* Render video iframe */}
-                    <iframe
-                      src={isActive(index) ? testimonial.src : ''}
-                      title={testimonial.name}
-                      className="w-full h-full object-cover relative z-10"
-                      frameBorder="0"
-                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                      allowFullScreen
-                    ></iframe>
+    <div className={cn("max-w-4xl mx-auto px-4 md:px-8 py-10", className)}>
+      <div className="flex flex-col gap-16 md:gap-24">
+        {testimonials.map((testimonial, index) => (
+          <div key={`${testimonial.name}-${index}`} className="flex flex-col md:flex-row gap-8 md:gap-12 items-center">
 
-                    {/* Overlay para vídeos inativos */}
-                    {!isActive(index) && (
-                      <div
-                        className="absolute inset-0 bg-black/40 backdrop-blur-[2px] cursor-pointer z-20"
-                        onClick={() => {
-                          setActive(index);
-                        }}
-                      ></div>
-                    )}
-                  </div>
-                </motion.div>
-              ))}
-            </AnimatePresence>
-          </div>
-        </div>
-        <div className="flex justify-between flex-col py-4">
-          {/* Navigation arrows at top */}
-          <div className="flex gap-4 mb-8">
-            <button
-              onClick={handlePrev}
-              className="h-10 w-10 rounded-full glass flex items-center justify-center group/button hover:bg-white/10 transition-colors"
-            >
-              <IconArrowLeft className="h-6 w-6 text-white group-hover/button:rotate-12 transition-transform duration-300" />
-            </button>
-            <button
-              onClick={handleNext}
-              className="h-10 w-10 rounded-full glass flex items-center justify-center group/button hover:bg-white/10 transition-colors"
-            >
-              <IconArrowRight className="h-6 w-6 text-white group-hover/button:-rotate-12 transition-transform duration-300" />
-            </button>
-          </div>
+            {/* Video Section */}
+            <div className="w-full md:w-1/2">
+              <div className="relative aspect-video w-full rounded-2xl overflow-hidden shadow-2xl border border-white/10 bg-zinc-900 group">
+                <iframe
+                  src={testimonial.src}
+                  title={testimonial.name}
+                  className="w-full h-full object-cover"
+                  frameBorder="0"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                  allowFullScreen
+                ></iframe>
+              </div>
+            </div>
 
-          <AnimatePresence mode="wait">
-            <motion.div
-              key={active}
-              initial={{
-                y: 20,
-                opacity: 0,
-              }}
-              animate={{
-                y: 0,
-                opacity: 1,
-              }}
-              exit={{
-                y: -20,
-                opacity: 0,
-              }}
-              transition={{
-                duration: 0.2,
-                ease: "easeInOut",
-              }}
-            >
-              <h3 className="text-3xl font-bold text-white tracking-tight">
-                {testimonials[active].name}
+            {/* Text Section */}
+            <div className="w-full md:w-1/2 text-center md:text-left">
+              <h3 className="text-2xl font-bold text-white tracking-tight mb-2">
+                {testimonial.name}
               </h3>
-              <p className="text-sm text-gray-500 font-medium uppercase tracking-widest mt-1">
-                {testimonials[active].designation}
+              <p className="text-sm text-blue-400 font-bold uppercase tracking-widest mb-6">
+                {testimonial.designation}
               </p>
-              <motion.p className="text-xl text-gray-300 mt-8 leading-relaxed font-light">
-                {testimonials[active].quote.split(" ").map((word, index) => (
-                  <motion.span
-                    key={`${active}-${index}`}
-                    initial={{
-                      filter: "blur(10px)",
-                      opacity: 0,
-                      y: 5,
-                    }}
-                    animate={{
-                      filter: "blur(0px)",
-                      opacity: 1,
-                      y: 0,
-                    }}
-                    transition={{
-                      duration: 0.2,
-                      ease: "easeInOut",
-                      delay: 0.01 * index,
-                    }}
-                    className="inline-block"
-                  >
-                    {word}&nbsp;
-                  </motion.span>
-                ))}
-              </motion.p>
-            </motion.div>
-          </AnimatePresence>
-        </div>
+              <p className="text-lg text-gray-300 leading-relaxed font-light">
+                "{testimonial.quote}"
+              </p>
+            </div>
+
+          </div>
+        ))}
       </div>
     </div>
   );

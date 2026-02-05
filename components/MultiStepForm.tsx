@@ -64,7 +64,7 @@ const MultiStepForm: React.FC<MultiStepFormProps> = ({ onComplete }) => {
             case 5: return formData.availableCash !== '';
             case 6: return formData.hasPartner !== '';
             case 7: return formData.willingToInvest !== '';
-            case 8: return formData.whyChooseYou.trim().length >= 50;
+            case 8: return formData.whyChooseYou.trim().length >= 30;
             case 9: return formData.commitment !== '';
             case 10: return formData.name.trim().length > 0;
             case 11: return formData.email.includes('@') && formData.email.includes('.');
@@ -104,9 +104,7 @@ const MultiStepForm: React.FC<MultiStepFormProps> = ({ onComplete }) => {
                         O primeiro passo é responder algumas perguntas rápidas.
                     </p>
                     <p className="text-gray-300 text-lg leading-relaxed">
-                        Nós da MGT Academy vamos analisar suas respostas para verificar
-                        se você está pronto(a) para participar dessa consultoria
-                        estratégica!
+
                     </p>
                     <p className="text-white text-xl font-semibold mt-8">
                         Vamos lá?
@@ -132,8 +130,8 @@ const MultiStepForm: React.FC<MultiStepFormProps> = ({ onComplete }) => {
                             key={option}
                             onClick={() => toggleMultipleChoice('currentMoment', option)}
                             className={`w-full p-4 rounded-xl border text-left transition-all ${formData.currentMoment.includes(option)
-                                    ? 'bg-white/10 border-white/30 text-white'
-                                    : 'bg-white/5 border-white/10 text-gray-300 hover:bg-white/5 hover:border-white/20'
+                                ? 'bg-white/10 border-white/30 text-white'
+                                : 'bg-white/5 border-white/10 text-gray-300 hover:bg-white/5 hover:border-white/20'
                                 }`}
                         >
                             <div className="flex items-start gap-3">
@@ -164,8 +162,8 @@ const MultiStepForm: React.FC<MultiStepFormProps> = ({ onComplete }) => {
                             key={option}
                             onClick={() => updateFormData('mainActivity', option)}
                             className={`w-full p-4 rounded-xl border text-left transition-all ${formData.mainActivity === option
-                                    ? 'bg-white/10 border-white/30 text-white'
-                                    : 'bg-white/5 border-white/10 text-gray-300 hover:bg-white/5 hover:border-white/20'
+                                ? 'bg-white/10 border-white/30 text-white'
+                                : 'bg-white/5 border-white/10 text-gray-300 hover:bg-white/5 hover:border-white/20'
                                 }`}
                         >
                             <div className="flex items-center gap-3">
@@ -208,8 +206,8 @@ const MultiStepForm: React.FC<MultiStepFormProps> = ({ onComplete }) => {
                             key={option}
                             onClick={() => updateFormData('recentRevenue', option)}
                             className={`w-full p-4 rounded-xl border text-left transition-all ${formData.recentRevenue === option
-                                    ? 'bg-white/10 border-white/30 text-white'
-                                    : 'bg-white/5 border-white/10 text-gray-300 hover:bg-white/5 hover:border-white/20'
+                                ? 'bg-white/10 border-white/30 text-white'
+                                : 'bg-white/5 border-white/10 text-gray-300 hover:bg-white/5 hover:border-white/20'
                                 }`}
                         >
                             <div className="flex items-center gap-3">
@@ -240,8 +238,8 @@ const MultiStepForm: React.FC<MultiStepFormProps> = ({ onComplete }) => {
                             key={option}
                             onClick={() => updateFormData('mainGoal', option)}
                             className={`w-full p-4 rounded-xl border text-left transition-all ${formData.mainGoal === option
-                                    ? 'bg-white/10 border-white/30 text-white'
-                                    : 'bg-white/5 border-white/10 text-gray-300 hover:bg-white/5 hover:border-white/20'
+                                ? 'bg-white/10 border-white/30 text-white'
+                                : 'bg-white/5 border-white/10 text-gray-300 hover:bg-white/5 hover:border-white/20'
                                 }`}
                         >
                             <div className="flex items-center gap-3">
@@ -284,8 +282,8 @@ const MultiStepForm: React.FC<MultiStepFormProps> = ({ onComplete }) => {
                             key={option}
                             onClick={() => updateFormData('availableCash', option)}
                             className={`w-full p-4 rounded-xl border text-left transition-all ${formData.availableCash === option
-                                    ? 'bg-white/10 border-white/30 text-white'
-                                    : 'bg-white/5 border-white/10 text-gray-300 hover:bg-white/5 hover:border-white/20'
+                                ? 'bg-white/10 border-white/30 text-white'
+                                : 'bg-white/5 border-white/10 text-gray-300 hover:bg-white/5 hover:border-white/20'
                                 }`}
                         >
                             <div className="flex items-center gap-3">
@@ -313,8 +311,8 @@ const MultiStepForm: React.FC<MultiStepFormProps> = ({ onComplete }) => {
                             key={option}
                             onClick={() => updateFormData('hasPartner', option)}
                             className={`w-full p-4 rounded-xl border text-left transition-all ${formData.hasPartner === option
-                                    ? 'bg-white/10 border-white/30 text-white'
-                                    : 'bg-white/5 border-white/10 text-gray-300 hover:bg-white/5 hover:border-white/20'
+                                ? 'bg-white/10 border-white/30 text-white'
+                                : 'bg-white/5 border-white/10 text-gray-300 hover:bg-white/5 hover:border-white/20'
                                 }`}
                         >
                             <div className="flex items-center gap-3">
@@ -343,8 +341,8 @@ const MultiStepForm: React.FC<MultiStepFormProps> = ({ onComplete }) => {
                             key={option}
                             onClick={() => updateFormData('willingToInvest', option)}
                             className={`w-full p-4 rounded-xl border text-left transition-all ${formData.willingToInvest === option
-                                    ? 'bg-white/10 border-white/30 text-white'
-                                    : 'bg-white/5 border-white/10 text-gray-300 hover:bg-white/5 hover:border-white/20'
+                                ? 'bg-white/10 border-white/30 text-white'
+                                : 'bg-white/5 border-white/10 text-gray-300 hover:bg-white/5 hover:border-white/20'
                                 }`}
                         >
                             <div className="flex items-center gap-3">
@@ -361,7 +359,7 @@ const MultiStepForm: React.FC<MultiStepFormProps> = ({ onComplete }) => {
         },
         {
             title: 'Poucas pessoas serão selecionadas para essa consultoria estratégica. Por que eu deveria escolher você?',
-            subtitle: '(Mínimo 50 caracteres)',
+            subtitle: '(Mínimo 30 caracteres)',
             content: (
                 <div className="max-w-2xl mx-auto">
                     <textarea
@@ -372,8 +370,8 @@ const MultiStepForm: React.FC<MultiStepFormProps> = ({ onComplete }) => {
                         className="w-full px-6 py-4 bg-white/5 border border-white/10 rounded-xl text-white placeholder:text-gray-500 focus:outline-none focus:border-white/30 transition-all resize-none"
                         autoFocus
                     />
-                    <p className={`text-sm mt-2 ${formData.whyChooseYou.length >= 50 ? 'text-green-400' : 'text-gray-500'}`}>
-                        {formData.whyChooseYou.length}/50 caracteres
+                    <p className={`text-sm mt-2 ${formData.whyChooseYou.length >= 30 ? 'text-green-400' : 'text-gray-500'}`}>
+                        {formData.whyChooseYou.length}/30 caracteres
                     </p>
                 </div>
             )
@@ -391,8 +389,8 @@ const MultiStepForm: React.FC<MultiStepFormProps> = ({ onComplete }) => {
                             key={option}
                             onClick={() => updateFormData('commitment', option)}
                             className={`w-full p-4 rounded-xl border text-left transition-all ${formData.commitment === option
-                                    ? 'bg-white/10 border-white/30 text-white'
-                                    : 'bg-white/5 border-white/10 text-gray-300 hover:bg-white/5 hover:border-white/20'
+                                ? 'bg-white/10 border-white/30 text-white'
+                                : 'bg-white/5 border-white/10 text-gray-300 hover:bg-white/5 hover:border-white/20'
                                 }`}
                         >
                             <div className="flex items-center gap-3">
@@ -531,11 +529,11 @@ const MultiStepForm: React.FC<MultiStepFormProps> = ({ onComplete }) => {
                                 onClick={handleNext}
                                 disabled={!canProceed()}
                                 className={`px-8 py-3 rounded-full font-semibold flex items-center justify-center gap-2 transition-all order-1 sm:order-2 ${canProceed()
-                                        ? 'bg-white text-black hover:bg-gray-200'
-                                        : 'bg-white/10 text-gray-500 cursor-not-allowed'
+                                    ? 'bg-white text-black hover:bg-gray-200'
+                                    : 'bg-white/10 text-gray-500 cursor-not-allowed'
                                     }`}
                             >
-                                {currentStep === 0 ? 'Começar Agora' : currentStep === 13 ? 'Finalizar' : 'Próximo'}
+                                {currentStep === 0 ? 'Começar Agora' : currentStep === 13 ? 'Confirmar pré-seleção' : 'Próximo'}
                                 <IconArrowRight size={20} />
                             </button>
                         </div>
