@@ -1,5 +1,5 @@
 
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { IconArrowLeft, IconArrowRight } from "@tabler/icons-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { cn } from "../lib/utils";
@@ -15,6 +15,9 @@ export const AnimatedTestimonials = ({
   className?: string;
 }) => {
   const [active, setActive] = useState(0);
+  const [isPlaying, setIsPlaying] = useState(false);
+  const [isPaused, setIsPaused] = useState(false);
+  const intervalRef = useRef<NodeJS.Timeout | null>(null);
 
   const handleNext = () => {
     setActive((prev) => (prev + 1) % testimonials.length);
@@ -28,12 +31,25 @@ export const AnimatedTestimonials = ({
     return index === active;
   };
 
-  useEffect(() => {
-    if (autoplay) {
-      const interval = setInterval(handleNext, 5000);
-      return () => clearInterval(interval);
+  const handleVideoClick = () => {
+    setIsPlaying(true);
+    setIsPaused(true);
+    if (intervalRef.current) {
+      clearInterval(intervalRef.current);
+      intervalRef.current = null;
     }
-  }, [autoplay]);
+  };
+
+  useEffect(() => {
+    if (autoplay && !isPaused) {
+      intervalRef.current = setInterval(handleNext, 5000);
+      return () => {
+        if (intervalRef.current) {
+          clearInterval(intervalRef.current);
+        }
+      };
+    }
+  }, [autoplay, isPaused, active]);
 
   const randomRotateY = () => {
     return Math.floor(Math.random() * 21) - 10;
@@ -85,9 +101,17 @@ export const AnimatedTestimonials = ({
                       frameBorder="0"
                       allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                       allowFullScreen
+                      onClick={isActive(index) ? handleVideoClick : undefined}
                     ></iframe>
                     {!isActive(index) && (
-                       <div className="absolute inset-0 bg-black/40 backdrop-blur-[2px] cursor-pointer" onClick={() => setActive(index)}></div>
+                      <div
+                        className="absolute inset-0 bg-black/40 backdrop-blur-[2px] cursor-pointer"
+                        onClick={() => {
+                          setActive(index);
+                          setIsPaused(false);
+                          setIsPlaying(false);
+                        }}
+                      ></div>
                     )}
                   </div>
                 </motion.div>
@@ -96,6 +120,22 @@ export const AnimatedTestimonials = ({
           </div>
         </div>
         <div className="flex justify-between flex-col py-4">
+          {/* Navigation arrows moved to top */}
+          <div className="flex gap-4 mb-8">
+            <button
+              onClick={handlePrev}
+              className="h-10 w-10 rounded-full glass flex items-center justify-center group/button hover:bg-white/10 transition-colors"
+            >
+              <IconArrowLeft className="h-6 w-6 text-white group-hover/button:rotate-12 transition-transform duration-300" />
+            </button>
+            <button
+              onClick={handleNext}
+              className="h-10 w-10 rounded-full glass flex items-center justify-center group/button hover:bg-white/10 transition-colors"
+            >
+              <IconArrowRight className="h-6 w-6 text-white group-hover/button:-rotate-12 transition-transform duration-300" />
+            </button>
+          </div>
+
           <AnimatePresence mode="wait">
             <motion.div
               key={active}
@@ -149,20 +189,6 @@ export const AnimatedTestimonials = ({
               </motion.p>
             </motion.div>
           </AnimatePresence>
-          <div className="flex gap-4 pt-12 md:pt-0">
-            <button
-              onClick={handlePrev}
-              className="h-10 w-10 rounded-full glass flex items-center justify-center group/button hover:bg-white/10 transition-colors"
-            >
-              <IconArrowLeft className="h-6 w-6 text-white group-hover/button:rotate-12 transition-transform duration-300" />
-            </button>
-            <button
-              onClick={handleNext}
-              className="h-10 w-10 rounded-full glass flex items-center justify-center group/button hover:bg-white/10 transition-colors"
-            >
-              <IconArrowRight className="h-6 w-6 text-white group-hover/button:-rotate-12 transition-transform duration-300" />
-            </button>
-          </div>
         </div>
       </div>
     </div>

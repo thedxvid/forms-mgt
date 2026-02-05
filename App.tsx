@@ -116,7 +116,7 @@ const App: React.FC = () => {
                 Estes são os resultados de quem decidiu não aceitar o comum e buscou a excelência técnica e visual.
               </p>
             </div>
-            <AnimatedTestimonials testimonials={MOCK_TESTIMONIALS} autoplay={false} />
+            <AnimatedTestimonials testimonials={MOCK_TESTIMONIALS} autoplay={true} />
           </div>
         </div>
       </main>
