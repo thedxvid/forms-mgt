@@ -1,3 +1,4 @@
+import React from 'react';
 
 export interface Testimonial {
   quote: string;
@@ -27,4 +28,12 @@ export interface FormData {
   willingToInvest: string;
   whyChooseYou: string;
   commitment: string;
+}
+
+declare global {
+  namespace JSX {
+    interface IntrinsicElements {
+      'vturb-smartplayer': React.DetailedHTMLProps<React.HTMLAttributes<HTMLElement>, HTMLElement> & { id?: string };
+    }
+  }
 }
