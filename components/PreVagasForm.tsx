@@ -70,7 +70,7 @@ const PreVagasForm: React.FC<PreVagasFormProps> = ({ onComplete }) => {
 
     const steps = [
         {
-            title: 'Call gratuita e revelacao de meu modelo de negocio para 2026',
+            title: 'Call gratuita e revelação de meu modelo de negócio para 2026',
             content: (
                 <div className="space-y-6 text-center max-w-2xl mx-auto">
                     <p className="text-gray-300 text-lg leading-relaxed">
