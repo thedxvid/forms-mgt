@@ -25,15 +25,6 @@ const Header: React.FC<HeaderProps> = ({ scrolled, showNavigation = true }) => {
               <a href="#video" className="hover:text-white transition-colors">Vídeo</a>
               <a href="#testimonials" className="hover:text-white transition-colors">Depoimentos</a>
             </nav>
-
-            <a
-              href="https://wa.me/"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="bg-white text-black px-5 py-2 rounded-full text-sm font-semibold hover:bg-gray-200 transition-colors"
-            >
-              Garantir minha vaga
-            </a>
           </>
         )}
       </div>
