@@ -86,7 +86,7 @@ const PreVagasForm: React.FC<PreVagasFormProps> = ({ onComplete }) => {
             )
         },
         {
-            title: 'O que falta hoje para você faturar mais?',
+            title: 'O que te falta hoje para você faturar mais?',
             content: (
                 <div className="max-w-2xl mx-auto">
                     <textarea
@@ -101,7 +101,7 @@ const PreVagasForm: React.FC<PreVagasFormProps> = ({ onComplete }) => {
             )
         },
         {
-            title: 'Se você tivesse que mirar em um foco em 2026 qual seria?',
+            title: 'Se você só pudesse investir seu tempo em um único negócio para 2026, qual seria e por quê?',
             content: (
                 <div className="max-w-2xl mx-auto">
                     <textarea
@@ -116,7 +116,7 @@ const PreVagasForm: React.FC<PreVagasFormProps> = ({ onComplete }) => {
             )
         },
         {
-            title: 'Toparia passar por uma imersão de 3 dias comigo, o que gostaria de aprender?',
+            title: 'Se você passasse por uma imersão de 3 dias intensos comigo, o que gostaria de aprender?',
             content: (
                 <div className="max-w-2xl mx-auto">
                     <textarea
