@@ -64,7 +64,7 @@ const PreVagasPage: React.FC = () => {
 
         // Enviar dados para o webhook
         try {
-            const response = await fetch('https://autowebhook.mgtinc.cloud/webhook/formsmentoria', {
+            const response = await fetch('https://autowebhook.mgtinc.cloud/webhook/Forms-grupo-whatsApp', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
