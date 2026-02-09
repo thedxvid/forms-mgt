@@ -30,6 +30,19 @@ export interface FormData {
   commitment: string;
 }
 
+export interface PreVagasFormData {
+  name: string;
+  phone: string;
+  email: string;
+  instagram: string;
+  // O que falta hoje para você faturar mais?
+  missingForMoreRevenue: string;
+  // Se você tivesse que mirar em um foco em 2026 qual seria?
+  focus2026: string;
+  // Toparia passar por uma imersão de 3 dias comigo, o que gostaria de aprender?
+  immersionInterest: string;
+}
+
 declare global {
   namespace JSX {
     interface IntrinsicElements {

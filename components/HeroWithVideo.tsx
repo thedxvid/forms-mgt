@@ -43,11 +43,11 @@ const HeroWithVideo: React.FC = () => {
 
         <div className="mt-12 flex flex-col sm:flex-row gap-6 justify-center items-center">
           <a
-            href="https://wa.me/"
+            href="https://chat.whatsapp.com/C2lriBaXu2nKuNaLtthl8O"
             target="_blank"
             className="w-full sm:w-auto px-10 py-5 bg-white text-black rounded-2xl font-bold text-lg hover:scale-[1.02] active:scale-[0.98] transition-all flex items-center justify-center gap-2 shadow-[0_0_20px_rgba(255,255,255,0.2)]"
           >
-            Garantir minha vaga
+            Entrar no grupo de espera
             <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
             </svg>
