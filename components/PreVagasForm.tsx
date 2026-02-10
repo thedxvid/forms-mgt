@@ -70,14 +70,14 @@ const PreVagasForm: React.FC<PreVagasFormProps> = ({ onComplete }) => {
 
     const steps = [
         {
-            title: 'Call gratuita e revelação de meu modelo de negócio para 2026',
+            title: 'Garanta acesso ao grupo seleto de pessoas que participarão das calls semanais exclusivas.',
             content: (
                 <div className="space-y-6 text-center max-w-2xl mx-auto">
                     <p className="text-gray-300 text-lg leading-relaxed">
-                        Data: 09/02 às 20:00
+                        Data: 16/02 às 20:00 segunda-feira
                     </p>
                     <p className="text-gray-300 text-lg leading-relaxed">
-                        Responda com sinceridade para garantir sua vaga.
+                        Basta responder com sinceridade a 3 perguntas.
                     </p>
                     <p className="text-white text-xl font-semibold mt-8">
                         Vamos lá?
