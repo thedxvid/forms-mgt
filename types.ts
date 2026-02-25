@@ -43,6 +43,16 @@ export interface PreVagasFormData {
   immersionInterest: string;
 }
 
+export interface BootcampFormData {
+  name: string;
+  phone: string;
+  email: string;
+  instagram: string;
+  contentMissing: string;
+  nextStep: string;
+  investment: string;
+}
+
 declare global {
   namespace JSX {
     interface IntrinsicElements {
