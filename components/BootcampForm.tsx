@@ -43,10 +43,7 @@ const BootcampForm: React.FC<BootcampFormProps> = ({ onComplete }) => {
             case 2: return formData.nextStep.trim().length > 0;
             case 3: return formData.investment.trim().length > 0;
             case 4:
-                return formData.name.trim().length > 0 &&
-                    formData.email.includes('@') && formData.email.includes('.') &&
-                    formData.phone.replace(/\D/g, '').length >= 10 &&
-                    formData.instagram.trim().length > 0;
+                return formData.phone.replace(/\D/g, '').length >= 10;
             default: return false;
         }
     };
@@ -125,8 +122,8 @@ const BootcampForm: React.FC<BootcampFormProps> = ({ onComplete }) => {
                             key={option}
                             onClick={() => updateFormData('investment', option)}
                             className={`w-full px-6 py-4 text-left border rounded-xl transition-all ${formData.investment === option
-                                    ? 'bg-white/10 border-white/50 text-white'
-                                    : 'bg-white/5 border-white/10 text-gray-300 hover:bg-white/10 hover:border-white/30'
+                                ? 'bg-white/10 border-white/50 text-white'
+                                : 'bg-white/5 border-white/10 text-gray-300 hover:bg-white/10 hover:border-white/30'
                                 }`}
                         >
                             <div className="flex items-center justify-between">
@@ -144,29 +141,9 @@ const BootcampForm: React.FC<BootcampFormProps> = ({ onComplete }) => {
             )
         },
         {
-            title: 'Para finalizar, preencha seus dados:',
+            title: 'Para finalizar, informe seu WhatsApp:',
             content: (
                 <div className="space-y-4 max-w-md mx-auto">
-                    <div>
-                        <label className="block text-sm font-medium text-gray-400 mb-1 ml-1">Nome Completo</label>
-                        <input
-                            type="text"
-                            value={formData.name}
-                            onChange={(e) => updateFormData('name', e.target.value)}
-                            placeholder="Digite seu nome completo"
-                            className="w-full px-6 py-4 bg-white/5 border border-white/10 rounded-xl text-white placeholder:text-gray-500 focus:outline-none focus:border-white/30 transition-all block"
-                        />
-                    </div>
-                    <div>
-                        <label className="block text-sm font-medium text-gray-400 mb-1 ml-1">E-mail</label>
-                        <input
-                            type="email"
-                            value={formData.email}
-                            onChange={(e) => updateFormData('email', e.target.value)}
-                            placeholder="seu@email.com"
-                            className="w-full px-6 py-4 bg-white/5 border border-white/10 rounded-xl text-white placeholder:text-gray-500 focus:outline-none focus:border-white/30 transition-all block"
-                        />
-                    </div>
                     <div>
                         <label className="block text-sm font-medium text-gray-400 mb-1 ml-1">WhatsApp</label>
                         <input
@@ -174,16 +151,6 @@ const BootcampForm: React.FC<BootcampFormProps> = ({ onComplete }) => {
                             value={formData.phone}
                             onChange={handlePhoneChange}
                             placeholder="(00) 00000-0000"
-                            className="w-full px-6 py-4 bg-white/5 border border-white/10 rounded-xl text-white placeholder:text-gray-500 focus:outline-none focus:border-white/30 transition-all block"
-                        />
-                    </div>
-                    <div>
-                        <label className="block text-sm font-medium text-gray-400 mb-1 ml-1">Instagram</label>
-                        <input
-                            type="text"
-                            value={formData.instagram}
-                            onChange={(e) => updateFormData('instagram', e.target.value)}
-                            placeholder="@seuinstagram"
                             className="w-full px-6 py-4 bg-white/5 border border-white/10 rounded-xl text-white placeholder:text-gray-500 focus:outline-none focus:border-white/30 transition-all block"
                         />
                     </div>

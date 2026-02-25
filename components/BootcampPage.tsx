@@ -28,8 +28,8 @@ const BootcampPage: React.FC = () => {
             console.error('Erro ao enviar dados para o webhook:', error);
         }
 
-        // Redireciona para o Google Calendar
-        window.location.href = 'https://calendar.app.google/uH8k8uZUM6hQ7fSX7';
+        // Redireciona para a página de obrigado do bootcamp
+        navigate('/obrigado-bootcamp');
     };
 
     return (
