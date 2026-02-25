@@ -11,7 +11,7 @@ const BootcampPage: React.FC = () => {
     const handleFormComplete = async (data: BootcampFormData) => {
         // Enviar dados para o webhook (mesmo utilizado em PreVagasPage)
         try {
-            const response = await fetch('https://autowebhook.mgtinc.cloud/webhook/Forms-grupo-whatsApp', {
+            const response = await fetch('https://autowebhook.mgtinc.cloud/webhook/leads-ja-compradores', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
