@@ -53,6 +53,19 @@ export interface BootcampFormData {
   investment: string;
 }
 
+export interface AplicacaoFormData {
+  commitment: string;        // Q1
+  monthlyRevenue: string;    // Q2
+  experienceTime: string;    // Q3
+  prospecting: string;       // Q4
+  instagram: string;         // Q5
+  investmentAvailable: string; // Q6
+  whyJoin: string;           // Q7
+  canStart: string;          // Q8
+  name: string;              // Q9
+  phone: string;             // Q10
+}
+
 declare global {
   namespace JSX {
     interface IntrinsicElements {

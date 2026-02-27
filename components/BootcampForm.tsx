@@ -163,15 +163,13 @@ const BootcampForm: React.FC<BootcampFormProps> = ({ onComplete }) => {
     const progress = ((currentStep + 1) / steps.length) * 100;
 
     return (
-        <div className="min-h-screen bg-black flex flex-col items-center justify-center px-4 sm:px-6 py-20 sm:py-24">
-            {/* Background Decorative Elements */}
-            <div className="fixed inset-0 pointer-events-none overflow-hidden">
-                <div className="absolute top-[-5%] left-[-5%] w-[40%] h-[40%] bg-blue-600/5 blur-[120px] rounded-full"></div>
-                <div className="absolute bottom-[10%] right-[-10%] w-[50%] h-[50%] bg-purple-600/5 blur-[150px] rounded-full"></div>
+        <div className="min-h-screen bg-black flex flex-col items-center justify-center px-4 sm:px-6 py-16 sm:py-20">
+        <div className="fixed inset-0 pointer-events-none overflow-hidden" aria-hidden="true">
+                <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-br from-blue-900/5 via-transparent to-purple-900/5"></div>
             </div>
 
             {/* Logo Centralizada */}
-            <div className="flex items-center gap-3 mb-12 relative z-10">
+            <div className="flex items-center gap-3 mb-8 sm:mb-12 relative z-10">
                 <img src="/logo_mgt.png" alt="MGT Academy" className="w-12 h-12 sm:w-14 sm:h-14 object-contain" />
                 <span className="text-2xl sm:text-3xl font-bold tracking-tight text-white">
                     MGT<span className="text-gray-500 font-light italic ml-1 text-xl sm:text-2xl">ACADEMY</span>
@@ -212,11 +210,11 @@ const BootcampForm: React.FC<BootcampFormProps> = ({ onComplete }) => {
                         </div>
 
                         {/* Navigation Buttons */}
-                        <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 mt-12 justify-center">
+                        <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 mt-8 sm:mt-12 justify-center">
                             {currentStep > 0 && (
-                                <button
+                            <button
                                     onClick={handleBack}
-                                    className="px-6 py-3 bg-white/5 border border-white/10 text-white rounded-full font-semibold hover:bg-white/10 transition-all flex items-center justify-center gap-2 order-2 sm:order-1"
+                                    className="px-6 py-4 sm:py-3 bg-white/5 border border-white/10 text-white rounded-full font-semibold hover:bg-white/10 transition-all flex items-center justify-center gap-2 order-2 sm:order-1 min-h-[48px]"
                                 >
                                     <IconArrowLeft size={20} />
                                     Voltar
@@ -225,8 +223,8 @@ const BootcampForm: React.FC<BootcampFormProps> = ({ onComplete }) => {
                             <button
                                 onClick={handleNext}
                                 disabled={!canProceed()}
-                                className={`px-8 py-3 rounded-full font-semibold flex items-center justify-center gap-2 transition-all order-1 sm:order-2 ${canProceed()
-                                    ? 'bg-white text-black hover:bg-gray-200'
+                                className={`px-8 py-4 sm:py-3 rounded-full font-semibold flex items-center justify-center gap-2 transition-all order-1 sm:order-2 min-h-[48px] ${canProceed()
+                                    ? 'bg-white text-black hover:bg-gray-200 active:scale-95'
                                     : 'bg-white/10 text-gray-500 cursor-not-allowed'
                                     }`}
                             >
