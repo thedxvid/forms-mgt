@@ -1,14 +1,12 @@
 import React, { useState } from 'react';
 import AplicacaoForm from './AplicacaoForm';
 import AplicacaoThankYouPage from './AplicacaoThankYouPage';
-import AplicacaoEncerradaPage from './AplicacaoEncerradaPage';
 import { AplicacaoFormData } from '../types';
 
-type PageState = 'form' | 'approved' | 'disqualified';
+type PageState = 'form' | 'approved';
 
 const AplicacaoPage: React.FC = () => {
     const [pageState, setPageState] = useState<PageState>('form');
-    const [disqualifyReason, setDisqualifyReason] = useState<string>('commitment');
 
     const handleComplete = async (data: AplicacaoFormData) => {
         // Envia dados para o webhook
@@ -24,25 +22,14 @@ const AplicacaoPage: React.FC = () => {
         setPageState('approved');
     };
 
-    const handleDisqualify = (reason: string) => {
-        setDisqualifyReason(reason);
-        setPageState('disqualified');
-    };
-
     if (pageState === 'approved') {
         return <AplicacaoThankYouPage />;
     }
 
-    if (pageState === 'disqualified') {
-        return <AplicacaoEncerradaPage reason={disqualifyReason} />;
-    }
-
     return (
-        <AplicacaoForm
-            onComplete={handleComplete}
-            onDisqualify={handleDisqualify}
-        />
+        <AplicacaoForm onComplete={handleComplete} />
     );
 };
 
 export default AplicacaoPage;
+

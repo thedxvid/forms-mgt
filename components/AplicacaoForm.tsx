@@ -5,7 +5,6 @@ import { AplicacaoFormData } from '../types';
 
 interface AplicacaoFormProps {
     onComplete: (data: AplicacaoFormData) => void;
-    onDisqualify: (reason: string) => void;
 }
 
 type Step =
@@ -17,7 +16,7 @@ const STEPS_ORDER: Step[] = ['intro', 'q1', 'q2', 'q3', 'q4', 'q5', 'q6', 'q7', 
 
 const TOTAL_QUESTIONS = 10;
 
-const AplicacaoForm: React.FC<AplicacaoFormProps> = ({ onComplete, onDisqualify }) => {
+const AplicacaoForm: React.FC<AplicacaoFormProps> = ({ onComplete }) => {
     const [currentStep, setCurrentStep] = useState<Step>('intro');
     const [direction, setDirection] = useState(1);
     const [formData, setFormData] = useState<AplicacaoFormData>({
@@ -66,13 +65,9 @@ const AplicacaoForm: React.FC<AplicacaoFormProps> = ({ onComplete, onDisqualify 
         if (prev) goTo(prev);
     };
 
-    const selectOption = (field: keyof AplicacaoFormData, value: string, disqualify?: boolean, reason?: string) => {
+    const selectOption = (field: keyof AplicacaoFormData, value: string) => {
         update(field, value);
-        if (disqualify && reason) {
-            setTimeout(() => onDisqualify(reason), 350);
-        } else {
-            setTimeout(() => goNext(), 350);
-        }
+        setTimeout(() => goNext(), 350);
     };
 
     const canProceed = (): boolean => {
@@ -185,8 +180,7 @@ const AplicacaoForm: React.FC<AplicacaoFormProps> = ({ onComplete, onDisqualify 
                         <OptionButton
                             label="Não é bem isso que procuro"
                             selected={formData.commitment === 'nao'}
-                            variant="danger"
-                            onClick={() => selectOption('commitment', 'nao', true, 'commitment')}
+                            onClick={() => selectOption('commitment', 'nao')}
                         />
                     </div>
                 );
@@ -288,8 +282,7 @@ const AplicacaoForm: React.FC<AplicacaoFormProps> = ({ onComplete, onDisqualify 
                         <OptionButton
                             label="Abaixo de R$5 mil"
                             selected={formData.investmentAvailable === 'abaixo5k'}
-                            variant="danger"
-                            onClick={() => selectOption('investmentAvailable', 'abaixo5k', true, 'investment')}
+                            onClick={() => selectOption('investmentAvailable', 'abaixo5k')}
                         />
                     </div>
                 );
@@ -325,8 +318,7 @@ const AplicacaoForm: React.FC<AplicacaoFormProps> = ({ onComplete, onDisqualify 
                         <OptionButton
                             label="Ainda não tenho certeza"
                             selected={formData.canStart === 'incerto'}
-                            variant="danger"
-                            onClick={() => selectOption('canStart', 'incerto', true, 'readiness')}
+                            onClick={() => selectOption('canStart', 'incerto')}
                         />
                     </div>
                 );
