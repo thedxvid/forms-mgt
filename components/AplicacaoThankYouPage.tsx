@@ -1,9 +1,22 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { IconCheck, IconBrandWhatsapp, IconCalendar } from '@tabler/icons-react';
 
 const AplicacaoThankYouPage: React.FC = () => {
-    const whatsappLink = 'https://wa.me/5531998234943?text=Ol%C3%A1%2C%20acabei%20de%20enviar%20minha%20aplica%C3%A7%C3%A3o%20para%20a%20MGT%20Academy%20e%20tenho%20uma%20d%C3%BAvida.';
+    const whatsappLink = 'https://wa.me/31998234943?text=Ol%C3%A1%2C%20acabei%20de%20enviar%20minha%20aplica%C3%A7%C3%A3o%20para%20a%20MGT%20Academy%20e%20tenho%20uma%20d%C3%BAvida.';
+
+    useEffect(() => {
+        // Carrega o script do Calendly dinamicamente
+        const script = document.createElement('script');
+        script.src = 'https://assets.calendly.com/assets/external/widget.js';
+        script.async = true;
+        document.body.appendChild(script);
+
+        return () => {
+            // Cleanup ao desmontar
+            document.body.removeChild(script);
+        };
+    }, []);
 
     return (
         <div className="min-h-screen bg-black flex flex-col items-center justify-center px-4 sm:px-6 py-16">
@@ -51,41 +64,30 @@ const AplicacaoThankYouPage: React.FC = () => {
                         </p>
                     </motion.div>
 
-                    {/* Card principal com Calendly + WhatsApp */}
+                    {/* Card principal */}
                     <motion.div
                         initial={{ opacity: 0, y: 15 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ delay: 0.5, duration: 0.4 }}
                         className="glass rounded-3xl p-6 sm:p-8 space-y-6"
                     >
-                        {/* Instrução de agendamento */}
-                        <div className="text-left space-y-2">
-                            <div className="flex items-center gap-3 mb-4">
-                                <div className="w-8 h-8 rounded-full bg-blue-500/15 border border-blue-500/25 flex items-center justify-center flex-shrink-0">
-                                    <IconCalendar size={16} className="text-blue-400" />
-                                </div>
-                                <div>
-                                    <p className="text-white font-semibold text-base">Agende sua call agora</p>
-                                    <p className="text-gray-500 text-sm">Escolha o melhor horário para você</p>
-                                </div>
+                        {/* Cabeçalho do agendamento */}
+                        <div className="flex items-center gap-3">
+                            <div className="w-9 h-9 rounded-full bg-blue-500/15 border border-blue-500/25 flex items-center justify-center flex-shrink-0">
+                                <IconCalendar size={17} className="text-blue-400" />
                             </div>
-
-                            {/* Calendly Inline Embed */}
-                            <div
-                                className="rounded-2xl overflow-hidden border border-white/10 bg-white/3"
-                                style={{ minHeight: '580px' }}
-                            >
-                                <iframe
-                                    src="https://calendly.com/mgtacademy/call-de-analise-de-perfil"
-                                    width="100%"
-                                    height="580"
-                                    frameBorder="0"
-                                    title="Agendar call de análise de perfil"
-                                    style={{ display: 'block', minWidth: '280px' }}
-                                    loading="lazy"
-                                />
+                            <div className="text-left">
+                                <p className="text-white font-semibold text-base">Agende sua call agora</p>
+                                <p className="text-gray-500 text-sm">Escolha o melhor horário para você</p>
                             </div>
                         </div>
+
+                        {/* Calendly Inline Widget */}
+                        <div
+                            className="calendly-inline-widget rounded-2xl overflow-hidden"
+                            data-url="https://calendly.com/theodorodarosacontato/30min"
+                            style={{ minWidth: '320px', height: '700px' }}
+                        />
 
                         {/* Divider */}
                         <div className="flex items-center gap-4">
@@ -118,7 +120,7 @@ const AplicacaoThankYouPage: React.FC = () => {
                         transition={{ delay: 0.7 }}
                         className="text-gray-700 text-xs mt-6"
                     >
-                        Verifique sua caixa de entrada — você receberá um e-mail de confirmação após o agendamento.
+                        Você receberá um e-mail de confirmação após o agendamento.
                     </motion.p>
                 </motion.div>
             </div>
