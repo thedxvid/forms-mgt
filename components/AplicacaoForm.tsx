@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { IconArrowRight, IconArrowLeft, IconCheck, IconX } from '@tabler/icons-react';
+import { IconArrowRight, IconArrowLeft, IconCheck, IconX, IconVideo, IconUpload } from '@tabler/icons-react';
 import { AplicacaoFormData } from '../types';
 
 interface AplicacaoFormProps {
@@ -27,6 +27,7 @@ const AplicacaoForm: React.FC<AplicacaoFormProps> = ({ onComplete }) => {
         instagram: '',
         investmentAvailable: '',
         whyJoin: '',
+        videoFile: null,
         canStart: '',
         name: '',
         phone: '',
@@ -70,6 +71,22 @@ const AplicacaoForm: React.FC<AplicacaoFormProps> = ({ onComplete }) => {
         setTimeout(() => goNext(), 350);
     };
 
+    const [videoDragging, setVideoDragging] = useState(false);
+    const videoInputRef = useRef<HTMLInputElement>(null);
+
+    const ACCEPTED_VIDEO_TYPES = [
+        'video/mp4', 'video/quicktime', 'video/avi', 'video/x-msvideo',
+        'video/webm', 'video/x-matroska', 'video/3gpp', 'video/3gpp2',
+        'video/hevc', 'video/x-m4v',
+    ];
+    const ACCEPTED_VIDEO_EXTS = '.mp4,.mov,.avi,.webm,.mkv,.3gp,.3g2,.m4v,.hevc';
+
+    const handleVideoFile = (file: File) => {
+        if (ACCEPTED_VIDEO_TYPES.includes(file.type) || /\.(mp4|mov|avi|webm|mkv|3gp|3g2|m4v|hevc)$/i.test(file.name)) {
+            setFormData(prev => ({ ...prev, videoFile: file }));
+        }
+    };
+
     const canProceed = (): boolean => {
         switch (currentStep) {
             case 'intro': return true;
@@ -77,7 +94,7 @@ const AplicacaoForm: React.FC<AplicacaoFormProps> = ({ onComplete }) => {
             case 'q7': return formData.whyJoin.trim().length >= 10;
             case 'q9': return formData.name.trim().length >= 2;
             case 'q10': return formData.phone.replace(/\D/g, '').length >= 10;
-            default: return false; // selection steps auto-advance
+            default: return false;
         }
     };
 
@@ -289,16 +306,81 @@ const AplicacaoForm: React.FC<AplicacaoFormProps> = ({ onComplete }) => {
 
             case 'q7':
                 return (
-                    <div className="max-w-2xl mx-auto">
+                    <div className="max-w-2xl mx-auto space-y-4">
                         <textarea
                             value={formData.whyJoin}
                             onChange={e => update('whyJoin', e.target.value)}
                             placeholder="Compartilhe o que te motivou a se candidatar, onde está hoje e onde quer chegar..."
-                            rows={6}
+                            rows={5}
                             autoFocus
                             className="w-full px-5 py-4 bg-white/5 border border-white/10 rounded-2xl text-white placeholder:text-gray-600 focus:outline-none focus:border-white/30 transition-all resize-none leading-relaxed"
                         />
-                        <p className="text-gray-600 text-xs mt-2 text-right">{formData.whyJoin.length} caracteres</p>
+                        <p className="text-gray-600 text-xs text-right">{formData.whyJoin.length} caracteres</p>
+
+                        {/* Upload de vídeo */}
+                        <div className="space-y-2">
+                            <p className="text-gray-400 text-sm font-medium flex items-center gap-2">
+                                <IconVideo size={16} className="text-blue-400" />
+                                Envie um vídeo se apresentando <span className="text-gray-600 font-normal">(opcional)</span>
+                            </p>
+                            <p className="text-gray-600 text-xs">
+                                Formatos aceitos: MP4, MOV, AVI, WebM, MKV, 3GP — iPhone e Android são bem-vindos.
+                            </p>
+
+                            {formData.videoFile ? (
+                                <div className="flex items-center gap-3 px-4 py-3 bg-blue-500/10 border border-blue-500/20 rounded-2xl">
+                                    <IconVideo size={20} className="text-blue-400 flex-shrink-0" />
+                                    <div className="flex-1 min-w-0">
+                                        <p className="text-white text-sm font-medium truncate">{formData.videoFile.name}</p>
+                                        <p className="text-gray-500 text-xs">
+                                            {(formData.videoFile.size / (1024 * 1024)).toFixed(1)} MB
+                                        </p>
+                                    </div>
+                                    <button
+                                        onClick={() => setFormData(prev => ({ ...prev, videoFile: null }))}
+                                        className="w-7 h-7 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center transition-all flex-shrink-0"
+                                    >
+                                        <IconX size={14} className="text-gray-400" />
+                                    </button>
+                                </div>
+                            ) : (
+                                <div
+                                    onClick={() => videoInputRef.current?.click()}
+                                    onDragOver={e => { e.preventDefault(); setVideoDragging(true); }}
+                                    onDragLeave={() => setVideoDragging(false)}
+                                    onDrop={e => {
+                                        e.preventDefault();
+                                        setVideoDragging(false);
+                                        const file = e.dataTransfer.files[0];
+                                        if (file) handleVideoFile(file);
+                                    }}
+                                    className={`cursor-pointer flex flex-col items-center justify-center gap-3 px-5 py-8 rounded-2xl border-2 border-dashed transition-all ${videoDragging
+                                            ? 'border-blue-400/60 bg-blue-500/10'
+                                            : 'border-white/10 bg-white/3 hover:border-white/25 hover:bg-white/5'
+                                        }`}
+                                >
+                                    <div className="w-10 h-10 rounded-full bg-white/8 flex items-center justify-center">
+                                        <IconUpload size={20} className="text-gray-400" />
+                                    </div>
+                                    <div className="text-center">
+                                        <p className="text-gray-300 text-sm font-medium">Clique ou arraste o vídeo aqui</p>
+                                        <p className="text-gray-600 text-xs mt-1">MP4 · MOV · AVI · WebM · MKV · 3GP</p>
+                                    </div>
+                                </div>
+                            )}
+
+                            <input
+                                ref={videoInputRef}
+                                type="file"
+                                accept={ACCEPTED_VIDEO_EXTS}
+                                className="hidden"
+                                onChange={e => {
+                                    const file = e.target.files?.[0];
+                                    if (file) handleVideoFile(file);
+                                    e.target.value = '';
+                                }}
+                            />
+                        </div>
                     </div>
                 );
 

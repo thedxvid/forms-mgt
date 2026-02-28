@@ -61,6 +61,7 @@ export interface AplicacaoFormData {
   instagram: string;         // Q5
   investmentAvailable: string; // Q6
   whyJoin: string;           // Q7
+  videoFile: File | null;    // Q7 – vídeo opcional
   canStart: string;          // Q8
   name: string;              // Q9
   phone: string;             // Q10
